@@ -1,0 +1,106 @@
+@using System.Text.Json
+@using CalculadoraCoutaPrestamos.Negocio
+@model CalculoCuotaViewModel
+@{
+    ViewData["Title"] = "Calculadora de cuotas";
+    var plazos = ViewBag.Plazos as IReadOnlyList<PlazoListaItem>;
+    var hoy = DateTime.Today;
+    var fechaMax = hoy.ToString("yyyy-MM-dd");
+    var fechaMin = hoy.AddYears(-120).ToString("yyyy-MM-dd");
+
+    string? modalTipo = ViewBag.ModalTipo as string;
+    string? modalJson = null;
+    if (modalTipo == "danger")
+    {
+        modalJson = JsonSerializer.Serialize(new
+        {
+            tipo = "danger",
+            titulo = ViewBag.ModalTitulo as string ?? "",
+            mensaje = ViewBag.ModalMensaje as string ?? "",
+        });
+    }
+    else if (modalTipo == "success" && ViewBag.ModalCuota is decimal cuotaModal)
+    {
+        var jsonOpts = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+        modalJson = JsonSerializer.Serialize(new
+        {
+            tipo = "success",
+            titulo = ViewBag.ModalTitulo as string ?? "",
+            cuota = cuotaModal,
+            tasaAplicada = ViewBag.ModalTasa as decimal?,
+            tabla = ViewBag.ModalTabla as IReadOnlyList<AmortizacionCuota>,
+            aviso = ViewBag.ModalAviso as string ?? "",
+        }, jsonOpts);
+    }
+}
+
+<div class="calculadora-app py-4">
+    <header class="mb-4">
+        <h1 class="h3 mb-1">Calculadora de cuotas</h1>
+        <p class="text-muted small mb-2">ASP.NET MVC · Cuota = (Monto × Tasa) ÷ meses</p>
+    </header>
+
+    <form asp-action="Index" method="post" class="card shadow-sm">
+        <div class="card-body d-flex flex-column gap-3">
+            <div asp-validation-summary="ModelOnly" class="text-danger small" role="alert"></div>
+
+            <div>
+                <label asp-for="FechaNacimiento" class="form-label"></label>
+                <input asp-for="FechaNacimiento" class="form-control" type="date" min="@fechaMin" max="@fechaMax" />
+                <small class="text-muted d-block">Las tasas de esta calculadora aplican a edades de 18 a 25 años; fuera de ese rango la evaluación es en sucursal.</small>
+                <span asp-validation-for="FechaNacimiento" class="text-danger small d-block"></span>
+            </div>
+
+            <div>
+                <label class="form-label" for="MontoMasked">Monto del préstamo</label>
+                <input type="hidden" asp-for="Monto" id="Monto" />
+                <input type="text" class="form-control" id="MontoMasked" inputmode="decimal" autocomplete="off" placeholder="0.00" />
+                <small class="text-muted d-block" id="MontoMasked-hint">Formato: miles con coma y decimales con punto (ej. 12,500.50)</small>
+                <span asp-validation-for="Monto" class="text-danger small d-block"></span>
+            </div>
+
+            <div>
+                <label asp-for="Meses" class="form-label"></label>
+                <select asp-for="Meses" class="form-select">
+                    @if (plazos != null)
+                    {
+                        foreach (var p in plazos)
+                        {
+                            <option value="@p.Valor">@p.Descripcion</option>
+                        }
+                    }
+                </select>
+                <span asp-validation-for="Meses" class="text-danger small d-block"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">Calcular cuota</button>
+        </div>
+    </form>
+
+    <div class="modal fade" id="modalResultadoMvc" tabindex="-1" aria-labelledby="modalResultadoMvcLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalResultadoMvcLabel"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (!string.IsNullOrEmpty(modalJson))
+{
+    <script type="application/json" id="calc-modal-payload">@Html.Raw(modalJson)</script>
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/vendor/imask.min.js" asp-append-version="true"></script>
+    <script src="~/js/calculadora-monto-mvc.js" asp-append-version="true"></script>
+    <script src="~/js/modal-resultado-mvc.js" asp-append-version="true"></script>
+}

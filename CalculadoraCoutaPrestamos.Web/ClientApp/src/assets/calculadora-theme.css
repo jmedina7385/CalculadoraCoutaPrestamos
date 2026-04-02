@@ -1,0 +1,37 @@
+.vue-shell .navbar-brand {
+  white-space: normal;
+}
+
+.calculadora-app {
+  max-width: 520px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.calculadora-app .btn-primary {
+  --bs-btn-bg: #2b78fd;
+  --bs-btn-border-color: #2b78fd;
+  --bs-btn-hover-bg: #1a66e8;
+  --bs-btn-hover-border-color: #1a66e8;
+  --bs-btn-active-bg: #1858cc;
+  --bs-btn-active-border-color: #1858cc;
+  --bs-btn-focus-shadow-rgb: 43, 120, 253;
+}
+
+.calculadora-app .form-control:focus,
+.calculadora-app .form-select:focus {
+  border-color: #2b78fd;
+  box-shadow: 0 0 0 0.2rem rgba(43, 120, 253, 0.2);
+}
+
+.calculadora-app .form-control,
+.calculadora-app .form-select {
+  border-radius: 0.375rem;
+  border-color: #ced4da;
+}
+
+.calculadora-app .card {
+  border-radius: 0.5rem;
+  border: 1px solid #e2e5e9;
+  background: #fff;
+}
