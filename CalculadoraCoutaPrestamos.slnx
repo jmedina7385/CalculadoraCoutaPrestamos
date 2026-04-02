@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="CalculadoraCoutaPrestamos.Datos/CalculadoraCoutaPrestamos.Datos.csproj" />
+  <Project Path="CalculadoraCoutaPrestamos.Negocio/CalculadoraCoutaPrestamos.Negocio.csproj" />
+  <Project Path="CalculadoraCoutaPrestamos.Tests/CalculadoraCoutaPrestamos.Tests.csproj" />
+  <Project Path="CalculadoraCoutaPrestamos.Web/CalculadoraCoutaPrestamos.Web.csproj" />
+</Solution>

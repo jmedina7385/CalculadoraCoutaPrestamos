@@ -1,0 +1,35 @@
+# Build .NET
+**/bin/
+**/obj/
+**/out/
+
+# Visual Studio / VS Code
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# JetBrains Rider
+.idea/
+*.sln.iml
+
+# Tests y cobertura
+TestResults/
+*.trx
+coverage*
+*.coverage
+*.coveragexml
+
+# Variables de entorno locales (no subir secretos)
+.env
+.env.local
+.env.*.local
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Logs
+*.log

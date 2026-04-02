@@ -1,0 +1,70 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+.calculadora-app {
+  max-width: 520px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.calculadora-app .btn-primary {
+  --bs-btn-bg: #2b78fd;
+  --bs-btn-border-color: #2b78fd;
+  --bs-btn-hover-bg: #1a66e8;
+  --bs-btn-hover-border-color: #1a66e8;
+  --bs-btn-active-bg: #1858cc;
+  --bs-btn-active-border-color: #1858cc;
+  --bs-btn-focus-shadow-rgb: 43, 120, 253;
+}
+
+.calculadora-app .form-control:focus,
+.calculadora-app .form-select:focus {
+  border-color: #2b78fd;
+  box-shadow: 0 0 0 0.2rem rgba(43, 120, 253, 0.2);
+}
+
+.calculadora-app .form-control,
+.calculadora-app .form-select {
+  border-radius: 0.375rem;
+  border-color: #ced4da;
+}
+
+.calculadora-app .card {
+  border-radius: 0.5rem;
+  border: 1px solid #e2e5e9;
+  background: #fff;
+}
+
+.calculadora-app .monto-dop-input-group .monto-moneda {
+  font-weight: 600;
+  color: #495057;
+  background-color: #f1f3f5;
+  border-color: #ced4da;
+  min-width: 3.25rem;
+  justify-content: center;
+}
+
+.calculadora-app .monto-dop-input-group .form-control {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.01em;
+}
